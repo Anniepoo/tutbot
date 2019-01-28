@@ -1,0 +1,1 @@
+/home/anniepoo/wordnet/prolog/wn_sk.pl
