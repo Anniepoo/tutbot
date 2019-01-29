@@ -15,18 +15,28 @@ data SRecord = SRecord {
                tagged :: Int -- # times sense in concordance
                }
 
-data WordNetSTable = HashTable Int SRecord
+newtype WordNetSTable  = WordNetSTable {
+                      shash :: (HashTable Int SRecord)
+                      }
 
-wordnetS :: WordNetSTable
-wordnetS = WordNetSTable
+-- newht1 :: HashTable Int SRecord
+newht1 = do
+       ht <- H.new
+       return ht
+
+ht :: HashTable Int SRecord
+ht = newht1
+wordnetS = WordNetSTable ht
 
 -- hyp(synset_id,synset_id).
 -- The hyp operator specifies that the second synset is a
 -- hypernym of the first synset.
-data WordNetHypernymTable = HashTable Int Int
+newtype WordNetHypernymTable = WordNetHypernymTable {
+                             hhash :: HashTable Int Int
+                             }
 
 wordnetH :: WordNetHypernymTable
-wordnetH  = WordNetHypernymTable
+wordnetH  = WordNetHypernymTable (HashTable Int Int)
 
 load_word_net :: FilePath -> IO ()
 load_word_net filename =
